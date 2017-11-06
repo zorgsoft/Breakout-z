@@ -1,19 +1,13 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Images/Background/Main_screen_1280x720.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Paddle.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Images/Sprites/Paddle.png" type="Texture" id=4]
-[ext_resource path="res://Scenes/Objects/Ball.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/LabelFps.gd" type="Script" id=6]
-[ext_resource path="res://Assets/Sounds/Fx/sound_001.wav" type="Sample" id=7]
-[ext_resource path="res://Assets/Sounds/Fx/explosion_001.wav" type="Sample" id=8]
-[ext_resource path="res://Assets/Sounds/Fx/paddle_collision_001.wav" type="Sample" id=9]
-
-[sub_resource type="RectangleShape2D" id=1]
-
-custom_solver_bias = 0.0
-extents = Vector2( 80, 8 )
+[ext_resource path="res://Scripts/LabelFps.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Sounds/Fx/sound_001.wav" type="Sample" id=6]
+[ext_resource path="res://Assets/Sounds/Fx/explosion_001.wav" type="Sample" id=7]
+[ext_resource path="res://Assets/Sounds/Fx/paddle_collision_001.wav" type="Sample" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 
@@ -30,25 +24,30 @@ points = Vector2Array( 128, 0, 0, -64, 1280, -64, 1152, 0 )
 custom_solver_bias = 0.0
 points = Vector2Array( 1152, 0, 1280, -64, 1280, 768, 1152, 768 )
 
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 80, 8 )
+
 [sub_resource type="SampleLibrary" id=6]
 
 samples/brick_collide = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 7 )
+"sample": ExtResource( 6 )
 }
 samples/brick_destroy = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 8 )
+"sample": ExtResource( 7 )
 }
 samples/paddle_collision_001 = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 9 )
+"sample": ExtResource( 8 )
 }
 
 [node name="Main" type="Node2D"]
@@ -62,36 +61,6 @@ texture = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="Paddle" type="KinematicBody2D" parent="."]
-
-editor/display_folded = true
-transform/pos = Vector2( 640, 700 )
-input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-collision/margin = 0.08
-script/script = ExtResource( 3 )
-__meta__ = {
-"_edit_group_": true
-}
-MOVE_SPEED = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle"]
-
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
-
-[node name="Sprite" type="Sprite" parent="Paddle"]
-
-transform/scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
-
-[node name="Ball" parent="." instance=ExtResource( 5 )]
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
@@ -123,9 +92,39 @@ polygon = Vector2Array( 128, 0, 128, 768, 0, 768, 0, -64, 1280, -64, 1280, 768, 
 shape_range = Vector2( 0, 2 )
 trigger = false
 
-[node name="Bricks" type="Node2D" parent="."]
+[node name="Paddle" type="KinematicBody2D" parent="."]
 
-[node name="Label" type="Label" parent="."]
+editor/display_folded = true
+transform/pos = Vector2( 640, 700 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+MOVE_SPEED = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Sprite" type="Sprite" parent="Paddle"]
+
+transform/scale = Vector2( 2, 2 )
+texture = ExtResource( 4 )
+
+[node name="UIContainer" type="Node2D" parent="."]
+
+editor/display_folded = true
+
+[node name="Label" type="Label" parent="UIContainer"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -139,7 +138,22 @@ text = "FPS: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script/script = ExtResource( 6 )
+script/script = ExtResource( 5 )
+
+[node name="ScoreLabel" type="Label" parent="UIContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 141.0
+margin/top = 12.0
+margin/right = 192.0
+margin/bottom = 26.0
+text = "Score: 0"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="Sound" type="SamplePlayer2D" parent="."]
 
@@ -151,20 +165,5 @@ params/attenuation/distance_exp = 1.0
 config/polyphony = 6
 config/samples = SubResource( 6 )
 config/pitch_random = 0.0
-
-[node name="ScoreLabel" type="Label" parent="."]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 141.0
-margin/top = 12.0
-margin/right = 181.0
-margin/bottom = 26.0
-text = "Score: 0"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
 

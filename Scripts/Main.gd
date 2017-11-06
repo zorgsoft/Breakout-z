@@ -1,5 +1,8 @@
 extends Node2D
 
+const CONTAINER_NAME_BRICKS = 'BricksContainer'
+const CONTAINER_NAME_BALLS = 'BallsContainer'
+
 var score = 0 setget set_score
 
 # Level map
@@ -42,14 +45,41 @@ var LEVEL_OPTIONS = {
 # Load level data on Level1 ready
 # -----------------------------------------------------------------------------
 func _ready():
+	var paddle = get_node('Paddle')
+	var ball_start_x = get_viewport().get_rect().size.x / 2
+	var ball_start_y = paddle.get_global_pos().y - (paddle.get_node('Sprite').get_item_rect().size.height / 2)
+
 	load_level(level_map)
+	create_ball(Vector2(ball_start_x, ball_start_y), Vector2(200, -200))
+
+# Create new ball
+func create_ball(vector_pos, vector_speed):
+	var balls_container
+	if has_node(CONTAINER_NAME_BALLS):
+		balls_container = get_node(CONTAINER_NAME_BALLS)
+	else:
+		balls_container = Node2D.new()
+		add_child(balls_container)
+		balls_container.set_name(CONTAINER_NAME_BALLS)
+
+	var new_ball = preload('res://Scenes/Objects/Ball.tscn').instance()
+	balls_container.add_child(new_ball)
+	new_ball.set_pos(vector_pos)
+	new_ball.set_linear_velocity(vector_speed)
 
 # Load level form level_data array
 # If clear_level is true, then remove all bricks
 # -----------------------------------------------------------------------------
 func load_level(level_data, clear_level = true):
 	# Remove all bricks if clear_level = true
-	var bricks = get_node('Bricks')
+	var bricks
+	if has_node(CONTAINER_NAME_BRICKS):
+		bricks = get_node(CONTAINER_NAME_BRICKS)
+	else:
+		bricks = Node2D.new()
+		add_child(bricks)
+		bricks.set_name(CONTAINER_NAME_BRICKS)
+
 	if clear_level:
 		for brick in bricks.get_children():
 			brick.queue_free()
@@ -82,6 +112,6 @@ func load_level(level_data, clear_level = true):
 					new_brick.get_node('Sprite').set_modulate(brick_type.color)
 
 func set_score(score_add):
-	var score_label = get_node('ScoreLabel')
+	var score_label = get_node('UIContainer/ScoreLabel')
 	score += score_add
 	score_label.set_text('Score: ' + str(score))
