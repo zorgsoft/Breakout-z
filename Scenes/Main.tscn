@@ -1,25 +1,19 @@
-[gd_scene load_steps=17 format=1]
+[gd_scene load_steps=15 format=1]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Images/Background/Main_screen_1280x720.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Paddle.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Images/Sprites/Paddle.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/Ball.gd" type="Script" id=5]
-[ext_resource path="res://Assets/Images/Sprites/Ball.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/LabelFps.gd" type="Script" id=7]
-[ext_resource path="res://Assets/Sounds/Fx/sound_001.wav" type="Sample" id=8]
-[ext_resource path="res://Assets/Sounds/Fx/explosion_001.wav" type="Sample" id=9]
-[ext_resource path="res://Assets/Sounds/Fx/paddle_collision_001.wav" type="Sample" id=10]
+[ext_resource path="res://Scenes/Objects/Ball.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/LabelFps.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Sounds/Fx/sound_001.wav" type="Sample" id=7]
+[ext_resource path="res://Assets/Sounds/Fx/explosion_001.wav" type="Sample" id=8]
+[ext_resource path="res://Assets/Sounds/Fx/paddle_collision_001.wav" type="Sample" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 80, 8 )
-
-[sub_resource type="CircleShape2D" id=2]
-
-custom_solver_bias = 0.0
-radius = 8.0
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 
@@ -42,19 +36,19 @@ samples/brick_collide = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 8 )
+"sample": ExtResource( 7 )
 }
 samples/brick_destroy = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 9 )
+"sample": ExtResource( 8 )
 }
 samples/paddle_collision_001 = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 10 )
+"sample": ExtResource( 9 )
 }
 
 [node name="Main" type="Node2D"]
@@ -97,48 +91,7 @@ _update_shape_index = 0
 transform/scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 
-[node name="Ball" type="RigidBody2D" parent="."]
-
-editor/display_folded = true
-transform/pos = Vector2( 640, 670 )
-input/pickable = false
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-mode = 2
-mass = 1.0
-friction = 0.0
-bounce = 1.0
-gravity_scale = 0.0
-custom_integrator = false
-continuous_cd = 0
-contacts_reported = 1
-contact_monitor = true
-sleeping = false
-can_sleep = true
-velocity/linear = Vector2( 200, -200 )
-velocity/angular = 0.0
-damp_override/linear = 0.0
-damp_override/angular = -1.0
-script/script = ExtResource( 5 )
-__meta__ = {
-"_edit_group_": true
-}
-SPEED_UP = 1.1
-MAX_SPEED = 300
-
-[node name="Sprite" type="Sprite" parent="Ball"]
-
-transform/scale = Vector2( 2, 2 )
-texture = ExtResource( 6 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
-
-shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
+[node name="Ball" parent="." instance=ExtResource( 5 )]
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
@@ -186,7 +139,7 @@ text = "FPS: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script/script = ExtResource( 7 )
+script/script = ExtResource( 6 )
 
 [node name="Sound" type="SamplePlayer2D" parent="."]
 
