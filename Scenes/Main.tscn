@@ -9,27 +9,27 @@
 [ext_resource path="res://Assets/Sounds/Fx/explosion_001.wav" type="Sample" id=7]
 [ext_resource path="res://Assets/Sounds/Fx/paddle_collision_001.wav" type="Sample" id=8]
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
 points = Vector2Array( 128, 0, 128, 768, 0, 768, 0, -64 )
 
-[sub_resource type="ConvexPolygonShape2D" id=4]
+[sub_resource type="ConvexPolygonShape2D" id=2]
 
 custom_solver_bias = 0.0
 points = Vector2Array( 128, 0, 0, -64, 1280, -64, 1152, 0 )
 
-[sub_resource type="ConvexPolygonShape2D" id=5]
+[sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
 points = Vector2Array( 1152, 0, 1280, -64, 1280, 768, 1152, 768 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 80, 8 )
 
-[sub_resource type="SampleLibrary" id=6]
+[sub_resource type="SampleLibrary" id=5]
 
 samples/brick_collide = {
 "db": 0.0,
@@ -66,13 +66,13 @@ __meta__ = {
 
 editor/display_folded = true
 input/pickable = false
-shapes/0/shape = SubResource( 3 )
+shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
-shapes/1/shape = SubResource( 4 )
+shapes/1/shape = SubResource( 2 )
 shapes/1/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/1/trigger = false
-shapes/2/shape = SubResource( 5 )
+shapes/2/shape = SubResource( 3 )
 shapes/2/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/2/trigger = false
 collision/layers = 1
@@ -97,7 +97,7 @@ trigger = false
 editor/display_folded = true
 transform/pos = Vector2( 640, 700 )
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -111,7 +111,7 @@ MOVE_SPEED = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle"]
 
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
@@ -163,7 +163,7 @@ params/attenuation/min_distance = 1.0
 params/attenuation/max_distance = 2048.0
 params/attenuation/distance_exp = 1.0
 config/polyphony = 6
-config/samples = SubResource( 6 )
+config/samples = SubResource( 5 )
 config/pitch_random = 0.0
 
 

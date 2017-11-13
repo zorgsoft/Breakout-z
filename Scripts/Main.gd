@@ -51,6 +51,14 @@ func _ready():
 
 	load_level(level_map)
 	create_ball(Vector2(ball_start_x, ball_start_y), Vector2(200, -200))
+	set_process_input(true)
+
+func _input(event):
+	if event.is_action_pressed("ui_fullscreen"):
+		OS.set_window_fullscreen(!OS.is_window_fullscreen())
+	
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
 
 # Create new ball
 func create_ball(vector_pos, vector_speed):
