@@ -16,7 +16,7 @@ func _fixed_process(delta):
 	var bodies = get_colliding_bodies()
 
 	for body in bodies:
-		if body.get_parent().get_name() == level.CONTAINER_NAME_BRICKS:
+		if body.get_parent().get_name() == Levels.CONTAINER_NAME_BRICKS:
 			c_counter += 1
 			if c_counter in c_count_array:
 				print('Increase speed')
