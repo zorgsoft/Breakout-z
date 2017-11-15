@@ -94,7 +94,6 @@ trigger = false
 
 [node name="Paddle" type="KinematicBody2D" parent="."]
 
-editor/display_folded = true
 transform/pos = Vector2( 640, 700 )
 input/pickable = false
 shapes/0/shape = SubResource( 4 )
@@ -108,6 +107,8 @@ __meta__ = {
 "_edit_group_": true
 }
 MOVE_SPEED = 2
+move_limit_left = 128
+move_limit_right = -128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle"]
 
